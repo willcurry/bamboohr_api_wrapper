@@ -8,6 +8,9 @@ class BambooHR
   def initialize(subdomain)
     @subdomain = subdomain
     @api_key = ENV["BAMBOO_HR_API_KEY"]
+    if @api_key.nil?
+      raise "Invalid API key! Have you set one?"
+    end
   end
 
   def employees
