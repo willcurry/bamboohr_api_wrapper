@@ -14,18 +14,22 @@ class BambooHR
   end
 
   def employees
-    format_data(employees_data, "employees")
+    data = JSON.parse(employees_data.body)
+    data["employees"]
   end
 
-  def format_data(data, index)
-    data = JSON.parse(data.body)
-    data[index]
+  def time_off_requests
+    JSON.parse(time_off_data.body)
   end
 
   private
 
   def employees_data
     self.class.get("/api/gateway.php/#{@subdomain}/v1/employees/directory", basic_auth: auth_info, headers: headers)
+  end
+
+  def time_off_data
+    self.class.get("/api/gateway.php/#{@subdomain}/v1/time_off/requests", basic_auth: auth_info, headers: headers)
   end
 
   def headers
